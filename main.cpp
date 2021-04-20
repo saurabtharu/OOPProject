@@ -76,6 +76,271 @@ class Patient: public Hospital{
 };
 
 
+void Patient::fileHandlingPat(patientDetail &p1){
+
+    stringstream ssId,ssName;
+    ssId << p1.id;
+    ssName << p1.name;
+
+    string idStr, nameStr;
+    ssId >> idStr;
+    ssName >> nameStr;
+
+//    p1.fileNamePat = (idStr + "_" + nameStr + "_pat"+ ".txt").c_str();
+    ofstream outStream((idStr + "_" + nameStr + "_pat"+ ".txt").c_str());
+    if(outStream)
+    {
+        
+
+        outStream << "\t\t\t\t\t\t\t\t\tInformation of Patient " << endl;
+        outStream << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+        outStream << "\t\t\t\t\t\t\t01 >> Patient's Id                   : " << p1.id << endl;
+        outStream << "\t\t\t\t\t\t\t02 >> Patient's Name                 : " << p1.name << endl;
+        outStream << "\t\t\t\t\t\t\t03 >> Patient's Age                  : " << p1.age << endl;
+        outStream << "\t\t\t\t\t\t\t04 >> Patient's Contact Number       : " << p1.contactNo << endl;
+        outStream << "\t\t\t\t\t\t\t05 >> Patient's Address              : " << p1.address << endl;
+        outStream << "\t\t\t\t\t\t\t06 >> Patient's Blood Group          : " << p1.bloodGroup << endl;
+        outStream << "\t\t\t\t\t\t\t07 >> Symptoms shown by Patient      : " << p1.symptom << endl;
+        outStream << "\t\t\t\t\t\t\t08 >> Patient's Room No              : " << p1.roomNo << endl;
+        outStream << "\t\t\t\t\t\t\t09 >> Patient's admit date           : " << p1.admitDate << endl;
+        outStream << "\t\t\t\t\t\t\t10 >> Patient's Medical charge       : " << p1.medCharge << endl;
+        outStream << "\t\t\t\t\t\t\t11 >> Patient's Room charge          : " << p1.roomCharge << endl;
+        outStream << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+
+        outStream << endl << endl;
+    }
+
+    outStream.close();
+
+}
+
+void Patient::addPatientInfo()
+{   
+    bcd:
+    cout << "\t\t\tHow many new patient??  ";
+    cin >> patNo;
+    cin.ignore();
+    cout << endl << endl;
+    if (patNo == 0)
+    {
+        cout << "\t\t\tOOPS!!! You are not allowed to enter the entries for 0 patient\n";
+        cout << "\t\t\t\tPress any key to enter number of patient again!!" ;
+        cin.get();
+        system("cls");
+        goto bcd;
+    }
+    else{
+
+        cout << "\t\t\tEnter the Patient's information:\n";
+
+        for (int i = 0; i < patNo; i++)
+        {
+
+            cout << "\t\t\tEnter Patient's ID                           : ";
+            cin >> p1[indexOfPatient].id;
+            cin.ignore();
+
+            cout << "\t\t\tEnter Patient's Name                         : ";
+            cin.getline(p1[indexOfPatient].name, 40);
+
+            cout << "\t\t\tEnter Patient's Age                          : ";
+            cin >> p1[indexOfPatient].age;
+            cin.ignore();
+
+            cout << "\t\t\tEnter Patient's Contact Number               : ";
+            cin >> p1[indexOfPatient].contactNo;
+            cin.ignore();
+
+            cout << "\t\t\tEnter Patient's Address                      : ";
+            cin.getline(p1[indexOfPatient].address, 40);
+
+            cout << "\t\t\tEnter Patient's Blood  Group                 : ";
+            cin.getline(p1[indexOfPatient].bloodGroup, 10);
+
+                
+            cout<<"\t\t\tSymptoms shown by patient                    : ";
+            cin.getline(p1[indexOfPatient].symptom, 40);
+
+            cout << "\t\t\tEnter Patient's admit date                   : ";
+            cin.getline(p1[indexOfPatient].admitDate, 20);
+
+            cout << "\t\t\tEnter Patient's Room Number                  : ";
+            cin >> p1[indexOfPatient].roomNo;
+
+            cout << "\t\t\tEnter Patient's Room charge                  : ";
+            cin >> p1[indexOfPatient].roomCharge;
+
+            cout << "\t\t\tEnter Patient's Medical charge               : ";
+            cin >> p1[indexOfPatient].medCharge;
+
+            p1[indexOfPatient].totalCharge = p1[indexOfPatient].roomCharge + p1[indexOfPatient].medCharge;
+            indexOfPatient++;
+
+            cout << endl;
+            cout << "The information of " << i + 1 << " Patient is added into database.\n";
+            cout << endl  << endl;
+            if (patNo > 1)
+            {
+                cout << "Fill the information of " << " Patient " << i + 2 << endl;
+            }
+        }
+        cout << "\t\t\t\tPress any key to continue . . ." << endl;
+        cin.get();
+    }
+}
+
+void Patient::displayPatientInfo(){
+
+    int inpId;
+    int i = 0;
+
+    if (indexOfPatient == 0)
+    {
+        cout << "\n\t\t\t\t\t\t\tOOPS!!No record of patient available to display\n";
+        cout << "\n\t\t\t\t\t\t\t   Press any key To choose another Option . . . ";
+    }
+    else
+    {
+        cout << "\t\t\t\t\tEnter the patient's id: ";
+        cin >> inpId;
+        cin.ignore();
+
+        cout << endl << endl << endl;
+        int flag = 0;
+        for (i = 0; i < indexOfPatient; i++)
+        {
+            if (p1[i].id == inpId)
+            {
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 1)
+        {
+
+            cout << "\t\t\t\t\t\t\t\t\tInformation of Patient " << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << "\t\t\t\t\t\t\t01 >> Patient's Id                   : " << p1[i].id << endl;
+            cout << "\t\t\t\t\t\t\t02 >> Patient's Name                 : " << p1[i].name << endl;
+            cout << "\t\t\t\t\t\t\t03 >> Patient's Age                  : " << p1[i].age << endl;
+            cout << "\t\t\t\t\t\t\t04 >> Patient's Contact Number       : " << p1[i].contactNo << endl;
+            cout << "\t\t\t\t\t\t\t05 >> Patient's Address              : " << p1[i].address << endl;
+            cout << "\t\t\t\t\t\t\t06 >> Patient's Blood Group          : " << p1[i].bloodGroup << endl;
+            cout << "\t\t\t\t\t\t\t07 >> Symptoms shown by Patient      : " << p1[i].symptom << endl;
+            cout << "\t\t\t\t\t\t\t08 >> Patient's Room No              : " << p1[i].roomNo << endl;
+            cout << "\t\t\t\t\t\t\t09 >> Patient's admit date           : " << p1[i].admitDate << endl;
+            cout << "\t\t\t\t\t\t\t10 >> Patient's Medical charge       : " << p1[i].medCharge << endl;
+            cout << "\t\t\t\t\t\t\t11 >> Patient's Room charge          : " << p1[i].roomCharge << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+
+            cout << endl << endl;
+
+
+            char get;
+            cout << "\t\t\t\t\t\t\t:: Do you want to save this information permanently? [Y/n] ";
+            cin >> get;
+            cin.ignore();
+            if (get == 'Y' || get == 'y' || get == '\n')
+            {
+                fileHandlingPat(p1[i]);
+            }
+            cout << "\t\t\t\t\t\t\t:: Patient's detail is saved into file !!" << endl;
+
+        }
+
+        else
+        {
+            cout << " \n\n\t\t\t\t\t\t\t    No such ID in database " << endl;
+        }
+            cout << " \n\t\t\t\t\t\t\tPress any key to choose another option.... ";
+    }
+    cin.get();
+    cout << endl;
+}
+
+
+void Patient::detailOfAllPatients(){
+
+    if (indexOfPatient == 0)
+    {
+        cout << "\n\t\t\t\t\t\t\tOOPS!!No record to display\n";
+        cout << "\n\t\t\t\t\t\tPress any key to choose another option.... ";
+    }
+    else
+    {
+
+        cout << "\t\t\t\t****************************************************************************************************\n";
+        cout << "\t\t\t\t*                      DETAILS OF ALL THE PATIENTS IN THE HOSPITAL                                 *\n";
+        cout << "\t\t\t\t****************************************************************************************************\n";
+        cout << "\t\t\t\t* ID\t" << "Name \t\t" << "       Age\t" << "Blood Group\t" << "    Symptoms    \t" << "      Admit date   *"<< endl;
+        cout << "\t\t\t\t****************************************************************************************************\n";
+
+        int i;
+        for (i = 0; i < indexOfPatient; i++)
+        {
+            cout<<"\t\t\t\t " << p1[i].id<< "    " << setfill(' ') << p1[i].name << setw(12) << p1[i].age << setw(12)
+            << p1[i].bloodGroup <<setw(23) << p1[i].symptom << setw(26) << p1[i].admitDate << "\t"  <<endl;
+            cout << "\t\t\t\t----------------------------------------------------------------------------------------------------\n";
+        }
+        cout << " \n\t\t\tPress any key to choose another option.... ";
+    }
+    cin.get();
+    cout << endl;
+}
+
+void Patient::genPatientBill(){
+    
+    int inpId;
+    int i = 0;
+
+    if (indexOfPatient == 0)
+    {
+        cout << "\n\t\t\t\t\t\t\tOOPS!!No record of patient available to display\n";
+        cout << "\n\t\t\t\t\t\t\t   Press any key To choose another Option.... ";
+    }
+    else
+    {
+        cout << "\t\t\t\t\tEnter the patient's id: ";
+        cin >> inpId;
+        cin.ignore();
+        cout << endl << endl << endl;
+        
+        int flag = 0;
+        for (i = 0; i < indexOfPatient; i++)
+        {
+            if (p1[i].id == inpId)
+            {
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 1)
+        {
+
+            cout << "\t\t\t\t\t\t\t\t\tBill of Patient "<<p1[i].id << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << "\t\t\t\t\t\t\t >> Patient's Name                 : " << p1[i].name << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << "\t\t\t\t\t\t\t >> Patient's Room charge          : " << p1[i].roomCharge << endl;
+            cout << "\t\t\t\t\t\t\t >> Patient's Medical charge       : " << p1[i].medCharge << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << "\t\t\t\t\t\t\tTOTAL CHARGE                        : " << p1[i].totalCharge << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+
+            cout << endl << endl;
+
+        }
+        else
+        {
+            cout << " \n\n\t\t\t\t\t\t\t\t   No such ID in database " << endl;
+        }
+            cout << " \n\t\t\t\t\t\t\tPress any key To choose another Option.... ";
+    }
+    cin.get();
+}
+
 /********************************
  * start of main function
  ********************************/

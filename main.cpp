@@ -58,6 +58,204 @@ public:
 
 };
 
+
+void Doctor::fileHandlingDoc(doctorDetail &d1){
+
+    stringstream ssId,ssName;
+    ssId << d1.id;
+    ssName << d1.name;
+ 
+    string idStr, nameStr;
+    ssId >> idStr;
+    ssName >> nameStr;
+
+    d1.fileNameDoc = (idStr + "_" + nameStr + "_doc"+ ".txt").c_str();
+
+    ofstream outStream(d1.fileNameDoc);
+
+    if(outStream)
+    {
+        
+        outStream << "\t\t\t\t\t\t\t\t\tInformation of Docotor " << endl;
+        outStream << "\t\t\t\t\t\t\t-" << setfill('-') << setw(52) << "-" << endl;
+        outStream << "\t\t\t\t\t\t\t1 >> Doctor's Id                   : " << d1.id << endl;
+        outStream << "\t\t\t\t\t\t\t2 >> Doctor's Name                 : " << d1.name << endl;
+        outStream << "\t\t\t\t\t\t\t3 >> Doctor's Age                  : " << d1.age << endl;
+        outStream << "\t\t\t\t\t\t\t4 >> Doctor's Qualification        : " << d1.qualification << endl;
+        outStream << "\t\t\t\t\t\t\t5 >> Doctor's Specilization        : " << d1.specialization << endl;
+        outStream << "\t\t\t\t\t\t\t6 >> Doctor's Experience           : " << d1.experience << endl;
+        outStream << "\t\t\t\t\t\t\t7 >> Doctor's Time of available    : " << d1.availablTime << endl;
+        outStream << "\t\t\t\t\t\t\t-" << setfill('-') << setw(52) << "-" << endl;
+        outStream << endl << endl;
+    }
+
+    outStream.close();
+
+}
+void Doctor::addDoctorInfo()
+{
+    abc:
+    cout << "How many new doctors??  ";
+    cin >> docNo;
+    cin.ignore();
+    cout << endl << endl;
+
+    if (docNo == 0)
+    {
+        cout << "\t\t\tOOPS!!! You are not allowed to enter the entries for 0 doctor\n";
+        cout << "\n\t\t\t\t  Press any key to enter number of doctors again!!"  ;
+        cin.get();
+        system("cls");
+        goto abc;
+    }
+    else
+    {
+
+        cout << "\t\t\tEnter the doctor's information:\n";
+
+        for (int i = 0; i < docNo; i++)
+        {
+            idLabel:
+            cout << "\t\t\tEnter Doctor's ID                                      : ";
+            cin >> d1[indexOfDoctors].id;
+            for (int a = 0; a < i; a++)
+            {
+                if (d1[indexOfDoctors].id == d1[a].id)
+                {
+                    cout << "\t\t\tUser of id " << d1[indexOfDoctors].id << " already exits." << endl;
+                    cout << "\t\t\tPlease enter the id again." << endl;
+                    goto idLabel;
+                }
+            }
+            cin.ignore();
+
+            cout << "\t\t\tEnter Doctor's name                                    : ";
+            cin.getline(d1[indexOfDoctors].name, 40);
+
+            cout << "\t\t\tEnter Doctor's age                                     : ";
+            cin >> d1[indexOfDoctors].age;
+            cin.ignore();
+
+            cout << "\t\t\tEnter Doctor's Qualification                           : ";
+            cin.getline(d1[indexOfDoctors].qualification, 40);
+            
+            cout << "\t\t\tEnter Doctor's Specialization                          : ";
+            cin.getline(d1[indexOfDoctors].specialization, 40);
+
+            cout << "\t\t\tEnter Doctor's experience in year                      : ";
+            cin.getline(d1[indexOfDoctors].experience, 40);
+
+            cout << "\t\t\tEnter the available time for doctor (FORMAT: HH-HH)    : ";
+            cin >> d1[indexOfDoctors].availablTime;
+            indexOfDoctors++;
+
+            cout << endl;
+            cout << "\t\t\tThe information of " << i + 1 << " doctor is added into database.\n";
+            cout << endl << endl;
+            if (docNo > 1)
+            {
+                cout << "\t\t\tFill the information of doctor " << i + 2 << endl;
+            }
+
+        }
+        cout << "\t\t\tPress any key to continue . . ." << endl;
+        cin.get();
+    }
+}
+
+void Doctor::displayDoctorInfo()
+{
+    int inpId;
+    int i = 0;
+
+    if (indexOfDoctors == 0)
+    {
+        cout << "\n\t\t\t\t\t\t\tOOPS!!No record of patient available to display\n";
+        cout << "\n\t\t\t\t\t\t\t  Press any key to choose another option . . . ";
+        cin.get();
+    }
+    else
+    {
+        cout << "\t\t\t\t\tEnter the doctor's id: ";
+        cin >> inpId;
+        cin.ignore();
+
+        cout << endl << endl << endl;
+        int flag = 0;
+        for (i = 0; i < indexOfDoctors; i++)
+        {
+            if (d1[i].id == inpId)
+            {
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 1)
+        {
+            cout << "\t\t\t\t\t\t\t\t\tInformation of Docotor " << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << "\t\t\t\t\t\t\t1 >> Doctor's Id                   : " << d1[i].id << endl;
+            cout << "\t\t\t\t\t\t\t2 >> Doctor's Name                 : " << d1[i].name << endl;
+            cout << "\t\t\t\t\t\t\t3 >> Doctor's Age                  : " << d1[i].age << endl;
+            cout << "\t\t\t\t\t\t\t4 >> Doctor's Qualification        : " << d1[i].qualification << endl;
+            cout << "\t\t\t\t\t\t\t5 >> Doctor's Specilization        : " << d1[i].specialization << endl;
+            cout << "\t\t\t\t\t\t\t6 >> Doctor's Experience           : " << d1[i].experience << endl;
+            cout << "\t\t\t\t\t\t\t7 >> Doctor's Time of available    : " << d1[i].availablTime << endl;
+            cout << "\t\t\t\t\t\t\t-" << setfill('-') << setw(50) << "-" << endl;
+            cout << endl << endl;
+            
+            char get;
+            cout << "\t\t\t\t\t\t\t:: Do you want to save this information permanently? [Y/n] ";
+            cin >> get;
+            cin.ignore();
+            if (get == 'Y' || get == 'y' || get == '\n')
+            {
+                fileHandlingDoc(d1[i]);
+            }
+            cout << "\t\t\t\t\t\t\t:: Doctor's detail is saved into file !!" << endl;
+
+        }
+        else
+        {
+            cout << " \n\n\t\t\t\t\t\t\t    No such ID in database " << endl;
+            cout << "\n\t\t\t\t\t\tPress any key To choose another Option . . . ";
+            cin.get();
+        }
+    }
+
+}
+
+void Doctor::detailOfAllDoctor()
+{
+
+    if (indexOfDoctors == 0)
+    {
+        cout << "\n\t\t\t\t\t\t\tOOPS!!No record to display\n";
+        cout << "\n\t\t\t\t\t\tPress any key To choose another Option . . . ";
+    }
+    else
+    {
+
+        cout << "\t\t\t\t******************************************************************************\n";
+        cout << "\t\t\t\t*                 DETAILS OF ALL THE DOCTORS IN THE HOSPITAL                 *\n";
+        cout << "\t\t\t\t******************************************************************************\n";
+        cout << "\t\t\t\t* ID\t" << "Name \t\t" << "    Specialization\t\t" << "     Available At    *" << endl;
+        cout << "\t\t\t\t*\t\t\t\t\t\t\t (Form(HH) - TO(HH)  *" << endl;
+        cout << "\t\t\t\t******************************************************************************\n";
+
+        int i;
+        for (i = 0; i < indexOfDoctors; i++)
+        {
+            cout << "\t\t\t\t" << d1[i].id << "\t" << d1[i].name << "\t\t" << d1[i].specialization << "\t\t\t    " << d1[i].availablTime << endl;
+            cout << "\t\t\t\t------------------------------------------------------------------------------\n";
+        }
+        cout << " \n\t\t\tPress Any Button To choose another Option . . . ";
+    }
+    cin.get();
+    cout << endl;
+}
+
 /**************************************************
  * class for Patient  ( child class of Hospital ) 
  *************************************************/

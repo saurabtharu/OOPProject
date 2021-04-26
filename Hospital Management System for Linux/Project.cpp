@@ -1,18 +1,6 @@
-//store time in character variable
-// void TimeDisplay()
-// {
-//     time_t rawtime;
-//     struct tm *timeinfo;
-
-//     time(&rawtime);
-    
-//     timeinfo = localtime(&rawtime);
-
-//     strftime(time101, sizeof(time101), "%d-%m-%Y %H:%M:%S", timeinfo);
-// }
 
 /**************************************************
- * 
+ * HOSPITAL MANAGEMENT SYSTEM
  *************************************************/
 #include <iostream>
 #include <iomanip>

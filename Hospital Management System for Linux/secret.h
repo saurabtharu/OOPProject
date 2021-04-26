@@ -1,0 +1,1 @@
+char key[30] = "peace";
